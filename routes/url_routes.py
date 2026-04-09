@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
 from schemas.url_schema import URLCreate, URLResponse
-from services.url_service import create_short_url, get_original_url
+from services.url_service import create_short_url, get_original_url , get_url_analytics
 from fastapi.responses import RedirectResponse
 from models.click_model import Click
 
@@ -32,3 +32,13 @@ def get_clicks(short_code: str, db: Session = Depends(get_db)):
         "short_code": short_code,
         "total_clicks": len(clicks)
     }
+    
+
+@router.get("/analytics/{short_code}")
+def analytics(short_code: str, db: Session = Depends(get_db)):
+    data = get_url_analytics(db, short_code)
+
+    if not data:
+        raise HTTPException(status_code=404, detail="URL not found")
+
+    return data
