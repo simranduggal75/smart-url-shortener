@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from schemas.url_schema import URLCreate, URLResponse
 from services.url_service import create_short_url, get_original_url
+from fastapi.responses import RedirectResponse
 
 router = APIRouter(prefix="/url", tags=["URL"])
 
@@ -18,4 +19,4 @@ def redirect_url(short_code: str, db: Session = Depends(get_db)):
     if not url:
         raise HTTPException(status_code=404, detail="URL not found")
 
-    return {"original_url": url.original_url}
+    return RedirectResponse(url=url.original_url , status_code=302)
