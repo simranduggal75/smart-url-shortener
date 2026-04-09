@@ -1,5 +1,6 @@
 from models.url_model import URL
 from utils.generator import generate_short_code
+from models.click_model import Click
 
 def create_short_url(db, original_url):
     short_code = generate_short_code()
@@ -17,4 +18,10 @@ def create_short_url(db, original_url):
 
 
 def get_original_url(db, short_code):
-    return db.query(URL).filter(URL.short_code == short_code).first()
+    url = db.query(URL).filter(URL.short_code == short_code).first()
+    if url:
+        click = Click(short_code=short_code)
+        db.add(click)
+        
+        db.commit()
+    return url
