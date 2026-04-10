@@ -43,8 +43,8 @@ def get_original_url(db, short_code):
 
     
     if url.expires_at and url.expires_at < datetime.utcnow():
-        return None   
-
+        raise HTTPException(status_code=410, detail="URL has expired")
+       
     return url
 
 def get_url_analytics(db, short_code):
