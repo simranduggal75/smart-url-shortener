@@ -11,7 +11,7 @@ router = APIRouter(prefix="/url", tags=["URL"])
 
 @router.post("/shorten", response_model=URLResponse)
 def shorten_url(data: URLCreate, db: Session = Depends(get_db)):
-    return create_short_url(db, data.original_url)
+    return create_short_url(db, data)
 
 
 @router.get("/clicks/{short_code}")

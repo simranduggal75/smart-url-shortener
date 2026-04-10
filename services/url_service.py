@@ -2,12 +2,24 @@ from models.url_model import URL
 from utils.generator import generate_short_code
 from models.click_model import Click
 from sqlalchemy import func
+from fastapi import HTTPException
 
-def create_short_url(db, original_url):
-    short_code = generate_short_code()
+def create_short_url(db, data):
+
+   
+    if data.custom_alias:
+        existing = db.query(URL).filter(URL.short_code == data.custom_alias).first()
+
+        if existing:
+            raise HTTPException(status_code=400, detail="Custom alias already taken")
+
+        short_code = data.custom_alias
+
+    else:
+        short_code = generate_short_code()
 
     new_url = URL(
-        original_url=original_url,
+        original_url=data.original_url,
         short_code=short_code
     )
 
