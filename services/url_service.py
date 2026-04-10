@@ -3,7 +3,7 @@ from utils.generator import generate_short_code
 from models.click_model import Click
 from sqlalchemy import func
 from fastapi import HTTPException
-
+from datetime import datetime, timedelta, timezone
 def create_short_url(db, data):
 
    
@@ -17,10 +17,15 @@ def create_short_url(db, data):
 
     else:
         short_code = generate_short_code()
+        
+    eexpires_at = None
+    if data.expires_in_minutes:
+        expires_at = datetime.utcnow() + timedelta(minutes=data.expires_in_minutes)
 
     new_url = URL(
         original_url=data.original_url,
-        short_code=short_code
+        short_code=short_code,
+        expires_at=expires_at
     )
 
     db.add(new_url)
@@ -32,11 +37,14 @@ def create_short_url(db, data):
 
 def get_original_url(db, short_code):
     url = db.query(URL).filter(URL.short_code == short_code).first()
-    if url:
-        click = Click(short_code=short_code)
-        db.add(click)
-        
-        db.commit()
+
+    if not url:
+        return None
+
+    
+    if url.expires_at and url.expires_at < datetime.utcnow():
+        return None   
+
     return url
 
 def get_url_analytics(db, short_code):
