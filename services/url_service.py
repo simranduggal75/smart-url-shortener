@@ -45,3 +45,18 @@ def get_url_analytics(db, short_code):
         "last_clicked": last_click,
         "created_at": url.created_at
     }
+    
+
+def get_trending_urls(db, limit=5):
+    results = db.query(
+        Click.short_code,
+        func.count(Click.id).label("clicks")
+    ).group_by(Click.short_code)\
+     .order_by(func.count(Click.id).desc())\
+     .limit(limit)\
+     .all()
+
+    return [
+        {"short_code": r.short_code, "clicks": r.clicks}
+        for r in results
+    ]
