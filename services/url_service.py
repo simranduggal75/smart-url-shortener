@@ -53,17 +53,19 @@ def get_url_analytics(db, short_code):
     if not url:
         return None
 
-    total_clicks = db.query(func.count(Click.id))\
-        .filter(Click.short_code == short_code).scalar()
-
-    last_click = db.query(func.max(Click.timestamp))\
-        .filter(Click.short_code == short_code).scalar()
+    clicks = db.query(Click).filter(Click.short_code == short_code).all()
 
     return {
         "short_code": short_code,
-        "total_clicks": total_clicks,
-        "last_clicked": last_click,
-        "created_at": url.created_at
+        "total_clicks": len(clicks),
+        "click_history": [
+            {
+                "ip_address": click.ip_address,
+                "user_agent": click.user_agent,
+                "timestamp": click.timestamp
+            }
+            for click in clicks
+        ]
     }
     
 
