@@ -7,4 +7,6 @@ class Click(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     short_code = Column(String, ForeignKey("urls.short_code"))
-    timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    ip_address = Column(String, nullable=True)
+    user_agent = Column(String, nullable=True)
+    timestamp = Column(DateTime, default=datetime.utcnow)

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException , Request
 from sqlalchemy.orm import Session
 from database import get_db
 from schemas.url_schema import URLCreate, URLResponse
@@ -40,10 +40,20 @@ def trending_urls(db: Session = Depends(get_db)):
     return get_trending_urls(db)
 
 @router.get("/{short_code}")
-def redirect_url(short_code: str, db: Session = Depends(get_db)):
+def redirect_url(short_code: str, request: Request, db: Session = Depends(get_db)):
     url = get_original_url(db, short_code)
 
     if not url:
         raise HTTPException(status_code=404, detail="URL not found")
 
-    return RedirectResponse(url=url.original_url , status_code=302)
+    click = Click(
+        short_code=short_code,
+        ip_address=request.client.host,
+        user_agent=request.headers.get("user-agent")
+    )
+
+    db.add(click)
+    db.commit()
+    print(request.client.host)
+    print(request.headers.get("user-agent"))
+    return RedirectResponse(url=url.original_url, status_code=302)
