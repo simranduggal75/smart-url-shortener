@@ -54,6 +54,4 @@ def redirect_url(short_code: str, request: Request, db: Session = Depends(get_db
 
     db.add(click)
     db.commit()
-    print(request.client.host)
-    print(request.headers.get("user-agent"))
     return RedirectResponse(url=url.original_url, status_code=302)
