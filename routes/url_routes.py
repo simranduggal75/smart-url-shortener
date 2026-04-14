@@ -6,11 +6,24 @@ from services.url_service import create_short_url, get_original_url , get_url_an
 from fastapi.responses import RedirectResponse
 from models.click_model import Click
 from services.url_service import get_trending_urls
+from utils.url_rate_limiter import is_rate_limited
 
 router = APIRouter(prefix="/url", tags=["URL"])
 
-@router.post("/shorten", response_model=URLResponse)
-def shorten_url(data: URLCreate, db: Session = Depends(get_db)):
+@router.post("/shorten")
+def shorten_url(
+    request: Request,
+    data: URLCreate,
+    db: Session = Depends(get_db)
+):
+    ip = request.client.host
+
+    if is_rate_limited(ip):
+        raise HTTPException(
+            status_code=429,
+            detail="Too many requests. Please try later."
+        )
+
     return create_short_url(db, data)
 
 
