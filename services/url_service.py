@@ -8,24 +8,33 @@ from utils.url_validator import is_suspicious_url
 
 def create_short_url(db, data):
 
-   
-  if is_suspicious_url(data.original_url):
-    raise HTTPException(status_code=400, detail="suspicious or unsafe URL detected")
-    
+    if is_suspicious_url(data.original_url):
+        raise HTTPException(
+            status_code=400,
+            detail="Suspicious or unsafe URL detected"
+        )
+
     if data.custom_alias:
-        existing = db.query(URL).filter(URL.short_code == data.custom_alias).first()
+        existing = db.query(URL).filter(
+            URL.short_code == data.custom_alias
+        ).first()
 
         if existing:
-            raise HTTPException(status_code=400, detail="Custom alias already taken")
+            raise HTTPException(
+                status_code=400,
+                detail="Custom alias already taken"
+            )
 
         short_code = data.custom_alias
 
     else:
         short_code = generate_short_code()
-        
-    eexpires_at = None
+
+    expires_at = None
     if data.expires_in_minutes:
-        expires_at = datetime.utcnow() + timedelta(minutes=data.expires_in_minutes)
+        expires_at = datetime.utcnow() + timedelta(
+            minutes=data.expires_in_minutes
+        )
 
     new_url = URL(
         original_url=data.original_url,
@@ -38,7 +47,6 @@ def create_short_url(db, data):
     db.refresh(new_url)
 
     return new_url
-
 
 def get_original_url(db, short_code):
     url = db.query(URL).filter(URL.short_code == short_code).first()
