@@ -4,9 +4,14 @@ from models.click_model import Click
 from sqlalchemy import func
 from fastapi import HTTPException
 from datetime import datetime, timedelta, timezone
+from utils.url_validator import is_suspicious_url
+
 def create_short_url(db, data):
 
    
+  if is_suspicious_url(data.original_url):
+    raise HTTPException(status_code=400, detail="suspicious or unsafe URL detected")
+    
     if data.custom_alias:
         existing = db.query(URL).filter(URL.short_code == data.custom_alias).first()
 
