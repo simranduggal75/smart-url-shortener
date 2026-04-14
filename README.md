@@ -51,32 +51,32 @@ security filtering, rate limiting, and request validation.
 # Project Structure
 
 
-smart-url-shortener/
+# smart-url-shortener/
 
 
-├── models/
+# ├── models/
 
   ├── url_model.py
 
   └── click_model.py
 
 
-├── routes/
+# ├── routes/
 
    └── url_routes.py
 
-├── schemas/
+# ├── schemas/
 
    └── url_schema.py
 
-│__ Screenshots
+# ├── Screenshots
 
 
-├── services/
+# ├── services/
 
    └── url_service.py
 
-├── utils/
+# ├── utils/
 
    ├── generator.py
 
