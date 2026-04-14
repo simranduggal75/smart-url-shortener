@@ -50,7 +50,7 @@ security filtering, rate limiting, and request validation.
 
 # Project Structure
 
-```bash
+
 smart-url-shortener/
 │
 ├── models/
@@ -78,7 +78,7 @@ smart-url-shortener/
 ├── database.py
 ├── requirements.txt
 └── README.md
-```
+
 
 
 
