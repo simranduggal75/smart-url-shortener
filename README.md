@@ -27,7 +27,7 @@ This project goes beyond a simple CRUD URL shortener by implementing **real-worl
 - IP-based rate limiting to prevent abuse/spam
 - Proper HTTP error handling and validation
 
----
+
 
 # Tech Stack
 
@@ -38,7 +38,7 @@ This project goes beyond a simple CRUD URL shortener by implementing **real-worl
 - **Validation:** Pydantic
 - **Server:** Uvicorn
 
----
+
 
 # Why This Project?
 
@@ -46,7 +46,7 @@ Built to deepen understanding of backend system design by implementing
 production-like backend concerns beyond CRUD operations such as analytics,
 security filtering, rate limiting, and request validation.
 
----
+
 
 # Project Structure
 
@@ -80,7 +80,7 @@ smart-url-shortener/
 └── README.md
 ```
 
----
+
 
 # API Endpoints
 
@@ -98,7 +98,7 @@ Request:
 }
 ```
 
----
+
 
 ## Redirect to Original URL
 
@@ -106,7 +106,7 @@ Request:
 
 Redirects user to the original URL.
 
----
+
 
 ## URL Analytics
 
@@ -117,7 +117,7 @@ Returns:
 - Click metadata
 - Click timestamps
 
----
+
 
 ## Trending URLs
 
@@ -125,7 +125,7 @@ Returns:
 
 Returns top clicked URLs ranked by popularity.
 
----
+
 
 # Security Features
 
@@ -138,7 +138,7 @@ Rejects malicious-looking URLs containing suspicious keywords such as:
 - hack
 - free-money
 
----
+
 
 ## Rate Limiting
 
@@ -147,7 +147,7 @@ Restricts excessive requests from the same IP to prevent abuse.
 Current limit:
 - **5 requests per minute per IP**
 
----
+
 
 # Error Handling
 
@@ -158,7 +158,7 @@ Implemented meaningful HTTP responses:
 - **410** → URL Expired
 - **429** → Rate Limit Exceeded
 
----
+
 
 # How to Run Locally
 
@@ -187,7 +187,7 @@ uvicorn main:app --reload
 http://127.0.0.1:8000/docs
 ```
 
----
+
 
 # Future Enhancements
 
@@ -200,7 +200,7 @@ Potential future improvements:
 - PostgreSQL migration for production readiness
 - Docker containerization
 
----
+
 
 # Key Learning Outcomes
 
@@ -215,7 +215,7 @@ This project demonstrates:
 - Real-world Error Handling
 - Production-inspired Backend Practices
 
----
+
 
 ## Author
 
