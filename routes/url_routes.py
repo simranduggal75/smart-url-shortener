@@ -21,11 +21,12 @@ def shorten_url(
     if is_rate_limited(ip):
         raise HTTPException(
             status_code=429,
-            detail="Too many requests. Please try later."
+            detail="Rate limit exceeded. Try again later."
         )
 
     return create_short_url(db, data)
 
+    
 
 @router.get("/clicks/{short_code}")
 def get_clicks(short_code: str, db: Session = Depends(get_db)):
