@@ -52,37 +52,38 @@ security filtering, rate limiting, and request validation.
 
 
 smart-url-shortener/
-│
+
+
 ├── models/
 
-│   ├── url_model.py
+  ├── url_model.py
 
-│   └── click_model.py
+  └── click_model.py
 
-│
+
 ├── routes/
 
-│   └── url_routes.py
-│
+   └── url_routes.py
+
 ├── schemas/
 
-│   └── url_schema.py
-│
+   └── url_schema.py
+
 │__ Screenshots
-│
-│
+
+
 ├── services/
 
-│   └── url_service.py
-│
+   └── url_service.py
+
 ├── utils/
 
-│   ├── generator.py
+   ├── generator.py
 
-│   ├── rate_limiter.py
+  ├── rate_limiter.py
 
-│   └── url_validator.py
-│
+  └── url_validator.py
+
 ├── main.py
 
 ├── database.py
