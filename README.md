@@ -5,6 +5,15 @@ A production-inspired backend application built using **FastAPI** that provides 
 This project goes beyond a simple CRUD URL shortener by implementing **real-world backend engineering concepts** such as request throttling, click analytics, suspicious URL filtering, and metadata tracking.
 
 
+## Live Demo
+
+🔗 https://smart-url-shortener-obtm.onrender.com/docs
+
+## Live Demo Note
+
+The application is deployed on Render's free tier.  
+If inactive, the server may take 30–60 seconds to wake up on the first request.
+
 
 # Features
 
